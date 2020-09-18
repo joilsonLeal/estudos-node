@@ -21,6 +21,10 @@ http.createServer((req, res) => {
 
     const { name, url, del } = URL.parse(req.url, true).query;
     
+    res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*'
+    });
+
     if(del) {
         data.urls = data.urls.filter(item => String(item.url) !== String(url));
         return writeFile( message => res.end(message) );
