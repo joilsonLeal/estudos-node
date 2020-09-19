@@ -30,8 +30,9 @@ function addElement({ name, url }) {
 }
 
 function removeElement(el) {
-    if (confirm('Tem certeza que deseja deletar?'))
+    if (confirm('Tem certeza que deseja deletar?')){
         el.parentNode.remove()
+    }
 }
 
 form.addEventListener("submit", (event) => {
@@ -50,7 +51,12 @@ form.addEventListener("submit", (event) => {
     if (!/^http/.test(url)) 
         return alert("Digite a url da maneira correta")
 
-    addElement({ name, url })
+    create(name, url);
 
     input.value = ""
-})
+});
+
+async function create(name, url) {
+    await fetch(`http://localhost:3000?name=${name}&url=${url}`);
+    addElement( {name, url} );
+}
