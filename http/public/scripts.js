@@ -29,8 +29,10 @@ function addElement({ name, url }) {
     ul.append(li)
 }
 
-function removeElement(el) {
+async function removeElement(el) {
     if (confirm('Tem certeza que deseja deletar?')){
+        let url = el.parentNode.firstElementChild.origin;
+        await fetch(`http://localhost:3000?url=${url}&del=1`);
         el.parentNode.remove()
     }
 }
