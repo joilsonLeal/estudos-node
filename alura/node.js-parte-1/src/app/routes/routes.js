@@ -4,6 +4,20 @@ module.exports = (app) => {
     });
 
     app.get('/books', (req, res) => {
-        return res.marko(require('../views/books/list/list.marko'));
+        return res.marko(
+            require('../views/books/list/list.marko'),
+            {
+                books: [
+                    {
+                        id: 1,
+                        title: 'Fundamentos de Node'
+                    },
+                    {
+                        id: 2,
+                        title: 'Node avançado'
+                    }
+                ]
+            }
+        );
     });
 };
