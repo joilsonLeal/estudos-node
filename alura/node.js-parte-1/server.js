@@ -1,10 +1,8 @@
-const express = require('express');
+const app = require('./src/config/custom-express');
 
-const server = express();
-server.use(express.json());
 
-server.get('/', (req, res) => {
+app.get('/', (req, res) => {
     return res.json({ message: 'ok' });
 })
 
-server.listen(3000);
+app.listen(3000);
