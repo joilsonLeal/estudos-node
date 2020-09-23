@@ -1,7 +1,10 @@
-const http = require('http');
+const express = require('express');
 
-const server = http.createServer((req, res) => {
-    res.end('ola mundo');
-});
+const server = express();
+server.use(express.json());
+
+server.get('/', (req, res) => {
+    return res.json({ message: 'ok' });
+})
 
 server.listen(3000);
