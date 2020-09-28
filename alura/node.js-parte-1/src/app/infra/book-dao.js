@@ -28,9 +28,74 @@ class LivroDao {
                 err => {
                     if(err)
                         return reject('Não foi possível adicionar o livro.');
-                    return resolve();
+                    resolve();
                 }
             )
+        });
+    }
+
+    selectById(id) {
+
+        return new Promise((resolve, reject) => {
+            this._db.get(
+                `
+                    SELECT *
+                    FROM books
+                    WHERE id = ?
+                `,
+                [id],
+                (erro, livro) => {
+                    if (erro) {
+                        return reject('Não foi possível encontrar o livro!');
+                    }
+                    return resolve(livro);
+                }
+            );
+        });
+    }
+
+    update(book) {
+        return new Promise((resolve, reject) => {
+            this._db.run(`
+                UPDATE livros SET
+                title = ?,
+                price = ?,
+                description = ?
+                WHERE id = ?
+            `,
+            [
+                book.title,
+                book.price,
+                book.description,
+                book.id
+            ],
+            erro => {
+                if (erro) {
+                    return reject('Não foi possível atualizar o livro!');
+                }
+
+                resolve();
+            });
+        });
+    }
+
+
+    remove(id) {
+        return new Promise((resolve, reject) => {
+            this._db.run(
+                `
+                    DELETE 
+                    FROM books
+                    WHERE id = ?
+                `,
+                [id],
+                (erro) => {
+                    if (erro) {
+                        return reject('Não foi possível remover o livro!');
+                    }
+                    return resolve();
+                }
+            );
         });
     }
 }

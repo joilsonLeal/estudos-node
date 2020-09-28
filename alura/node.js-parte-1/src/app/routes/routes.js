@@ -30,4 +30,13 @@ module.exports = (app) => {
     app.get('/books/form', (req, res) => {
         return res.marko(require('../views/books/form/form.marko'));
     });
+
+    app.delete('/books/:bookId', (req, res) => {
+        const { bookId } = req.params;
+        const bookDao = new BookDao(db);
+
+        bookDao.remove(bookId)
+            .then(res.redirect('/books'))
+            .catch(err => console.log(err));    
+    });
 };
