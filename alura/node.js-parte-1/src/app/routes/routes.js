@@ -16,8 +16,18 @@ module.exports = (app) => {
                     books
                 }
             ))
-            .catch(err => {
-                console.log(err);
-            });
+            .catch(err => console.log(err));
+    });
+
+    app.post('/books', (req, res) => {
+        const bookDao = new BookDao(db);
+
+        bookDao.add(req.body)
+        .then(res.redirect('/books'))
+        .catch(err => console.log(err));        
+    });
+
+    app.get('/books/form', (req, res) => {
+        return res.marko(require('../views/books/form/form.marko'));
     });
 };
