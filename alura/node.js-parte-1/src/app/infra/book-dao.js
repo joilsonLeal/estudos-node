@@ -57,7 +57,7 @@ class LivroDao {
     update(book) {
         return new Promise((resolve, reject) => {
             this._db.run(`
-                UPDATE livros SET
+                UPDATE books SET
                 title = ?,
                 price = ?,
                 description = ?
