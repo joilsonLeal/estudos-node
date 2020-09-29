@@ -1,4 +1,4 @@
-const uuid = require('uuid');
+const uuid = require('uuid/v4');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -10,22 +10,21 @@ module.exports = (app) => {
     passport.use(new LocalStrategy(
         {
             usernameField: 'email',
-            passwordField: 'senha',
+            passwordField: 'senha'
         },
         (email, senha, done) => {
             const usuarioDao = new UsuarioDao(db);
             usuarioDao.buscaPorEmail(email)
-                .then(usuario => {
-                    if(!usuario || senha != usuario.senha) {
-                        done(null, false, {
-                            mensagem: 'Login ou senha incorretos'
-                        });
-                    }
-                    return done(null, usuario);
-                })
-                .catch(erro => {
-                    done(erro, false);
-                });
+                        .then(usuario => {
+                            if (!usuario || senha != usuario.senha) {
+                                return done(null, false, {
+                                    mensagem: 'Login e senha incorretos!'
+                                });
+                            }
+
+                            return done(null, usuario);
+                        })
+                        .catch(erro => done(erro, false));
         }
     ));
 
@@ -33,24 +32,29 @@ module.exports = (app) => {
         const usuarioSessao = {
             nome: usuario.nome_completo,
             email: usuario.email
-        }
-
+        };
+    
         done(null, usuarioSessao);
     });
-
+    
     passport.deserializeUser((usuarioSessao, done) => {
         done(null, usuarioSessao);
     });
 
-    app.use(sessao({
+    app.use(session({
         secret: 'node alura',
-        genid: (req) => {
+        genid: function(req) {
             return uuid();
         },
         resave: false,
-        saveUninitialized: false //cria sessão apenas para quem faz o login
+        saveUninitialized: false
     }));
 
     app.use(passport.initialize());
     app.use(passport.session());
+
+    app.use((req, resp, next) => {
+        req.passport = passport;
+        next();
+    });
 };
