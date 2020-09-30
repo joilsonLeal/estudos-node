@@ -12,13 +12,15 @@ class Tables {
             pet         VARCHAR(20)     NULL,
             servico     VARCHAR(20) NOT NULL,
             status      VARCHAR(20) NOT NULL,
+            data        DATETIME    NOT NULL,
+            dataCriacao DATETIME    NOT NULL,
             observacoes TEXT            NULL,
             PRIMARY KEY (id)
         )`;
         this._connection.query(sql, erro => {
             if(erro) 
                 console.log(erro);
-        })
+        });
     }
 }
 
