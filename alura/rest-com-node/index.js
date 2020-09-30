@@ -1,12 +1,5 @@
-const express = require('express');
+const customExpress = require('./config/customExpress');
 
-const app = express();
-
-
-app.get('/atendimentos', (req, res) => {
-    res.send('<h1>Atendimentos</h1>')
-});
-
-
+const app = customExpress();
 
 app.listen(3000, () => console.log('Server is running...'));
