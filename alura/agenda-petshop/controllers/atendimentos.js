@@ -1,12 +1,16 @@
 const AtendimentoModel = require('../models/Atendimento');
-
+const ado = new AtendimentoModel();
 module.exports = app => {
     app.get('/atendimentos', (req, res) => {
-        res.send('atendimentos/get');
+        ado.lista(res);
+    });
+
+    app.get('/atendimentos/:id', (req, res) => {
+        const { id } = req.params;
+        ado.buscaPorId(id, res);
     });
 
     app.post('/atendimentos', (req, res) => {
-        const ado = new AtendimentoModel();
         ado.adiciona(req.body, res);
     });
 }

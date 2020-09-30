@@ -6,7 +6,7 @@ class Atendimento {
         const atendimentoDatado = {
             ...atendimento, 
             data: moment(atendimento.data, 'dd/mm/yyyy').format('YYYY-MM-DD HH:MM:SS'),
-            dataCriacao: moment().format('YYYY-MM-DD HH:MM:SS'),
+            dataCriacao: new Date(),
         };
 
         const dataEhValida = moment(atendimentoDatado.data).isSameOrAfter(atendimentoDatado.dataCriacao);
@@ -37,6 +37,26 @@ class Atendimento {
                 res.status(400).json(erro);
             else 
                 res.status(201).json(resultados);
+        });
+    }
+
+    lista(res) {
+        const sql = `SELECT * FROM Atendimentos`;
+        conexao.query(sql, (erro, resultados) => {
+            if(erro)
+                res.status(400).json(erro);
+            else
+                res.status(200).json(resultados);
+        });
+    }
+
+    buscaPorId(id, res) {
+        const sql = `SELECT * FROM Atendimentos WHERE id = ?`;
+        conexao.query(sql, id, (erro, resultado) => {
+            if(erro)
+                res.status(400).json(erro);
+            else
+                res.status(200).json(resultado);
         });
     }
 }
