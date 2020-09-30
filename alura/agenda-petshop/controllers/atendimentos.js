@@ -6,9 +6,7 @@ module.exports = app => {
     });
 
     app.post('/atendimentos', (req, res) => {
-        console.log(req.body);
         const ado = new AtendimentoModel();
-        ado.adiciona(req.body);
-        res.send('atendimento/post');
+        ado.adiciona(req.body, res);
     });
 }
