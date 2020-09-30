@@ -13,4 +13,15 @@ module.exports = app => {
     app.post('/atendimentos', (req, res) => {
         ado.adiciona(req.body, res);
     });
+
+    app.patch('/atendimentos/:id', (req, res) => {
+        const atendimento = req.body;
+        const id = req.params;
+        ado.altera(id, atendimento, res);
+    });
+
+    app.delete('/atendimentos/:id', (req, res) => {
+        const id = req.params;
+        ado.delete(id, res);
+    });
 }

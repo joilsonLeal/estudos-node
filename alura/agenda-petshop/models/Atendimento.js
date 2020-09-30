@@ -59,6 +59,32 @@ class Atendimento {
                 res.status(200).json(resultado[0]);
         });
     }
+
+    altera(id, atendimento, res) {  
+        if(atendimento.data)
+            atendimento.data = moment(atendimento.data, 'dd/mm/yyyy').format('YYYY-MM-DD HH:MM:SS');
+
+        const sql = `UPDATE Atendimentos SET data = ?, status = ? WHERE id = ?`;
+
+        conexao.query(sql, [atendimento.data, atendimento.status, id], (erro, resultado) => {
+
+            if(erro)
+                res.status(400).json(erro);
+            else
+                res.status(200).json(resultado);
+        });
+    }
+
+    delete(id, res) {
+        const sql = `DELETE FROM Atendimentos WHERE id = ?`;
+
+        conexao.query(sql, id, (erro, resultado) => {
+            if(erro)
+                res.status(400).json(erro);
+            else
+                res.status(200).json(resultado);
+        });
+    }
 }
 
 module.exports = Atendimento;
