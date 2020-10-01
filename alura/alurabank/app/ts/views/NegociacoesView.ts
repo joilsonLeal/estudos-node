@@ -17,7 +17,6 @@ class NegociacoesView {
                         <th>VOLUME</th>
                     </tr>
                 </thead>
-                    
                 <tbody>
                     ${model.paraArray().map(negociacao => `
                         <tr>
@@ -28,7 +27,6 @@ class NegociacoesView {
                         </tr>
                     `).join('')}
                 </tbody>
-
                 <tfoot>
                 </tfoot>
             </table>  
