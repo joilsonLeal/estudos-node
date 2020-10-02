@@ -1,7 +1,4 @@
-class NegociacoesView {
-    constructor(seletor) {
-        this._element = document.querySelector(seletor);
-    }
+class NegociacoesView extends View {
     template(model) {
         return `
             <table class="table table-hover table-bordered">
