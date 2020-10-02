@@ -1,9 +1,5 @@
-const express = require('express');
+const custonExpress = require('./config/custon-express');
 
-const app = express();
-
-app.get('/', (req, res) => {
-    return res.send('payfast');
-});
+const app = custonExpress();
 
 app.listen(3000);
