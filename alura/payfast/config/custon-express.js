@@ -1,8 +1,11 @@
-const pagamentos = require('../controllers/pagamentos');
 const express = require('express');
-
+const consign = require('consign');
 module.exports = () => {
     const app = express();
-    pagamentos(app);
+
+    consign()
+        .include('./controllers')
+        .into(app);
+
     return app;
 }
