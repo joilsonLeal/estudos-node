@@ -7,5 +7,7 @@ module.exports = () => {
         .include('controllers')
         .into(app);
 
+    app.use(express.json());
+
     return app;
 }
